@@ -26,11 +26,10 @@ deps:
 	sudo apt-get install -y build-essential git autoconf automake libtool pkg-config unzip wget
 	sudo apt-get install -y libncurses5-dev libncursesw5-dev libcurl4-openssl-dev \
 		libglib2.0-dev libsqlite3-dev libjansson-dev libcjson-dev
+	@echo "Done Step 1"
 
-# B1: WiringPi
 wiringpi:
-	@echo "=== Installing WiringPi (build .deb and install) ==="
-	if [ ! -d "WiringPi" ]; then git clone https://github.com/WiringPi/WiringPi.git; fi
+	@echo "=== Installing WiringPi (local build) ==="
 	cd WiringPi && ./build debian
 	if [ -d "WiringPi/debian-template" ]; then \
 		mv WiringPi/debian-template/*.deb . || true; \
@@ -40,19 +39,13 @@ wiringpi:
 	else \
 		echo "No .deb produced for WiringPi; please check WiringPi/build output."; \
 	fi
+	@echo "Done Step 2"
 
-# B2: i2c1602
 i2c1602:
-	@echo "=== Installing i2c1602 ==="
-	if [ ! -d "i2c1602-main" ]; then \
-		wget -q -O main.zip https://github.com/vinhcatba/i2c1602/archive/refs/heads/main.zip; \
-		unzip -o main.zip -d .; \
-	fi
-	if [ -d "i2c1602-main" ]; then \
-		cd i2c1602-main && make && sudo make install; \
-	fi
+	@echo "=== Installing i2c1602 (local build) ==="
+	cd i2c1602-main && make && sudo make install
+	@echo "Done Step 3"
 
-# Clean build binary
 clean:
 	rm -f $(TARGET)
 
