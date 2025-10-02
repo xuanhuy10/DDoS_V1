@@ -1,0 +1,8 @@
+.user-info-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 5px;
+    padding: 12px 24px;
+}

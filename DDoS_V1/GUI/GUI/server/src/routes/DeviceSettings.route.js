@@ -1,0 +1,11 @@
+const express = require('express');
+const router = express.Router();
+const { ppAuthenticate } = require('../middleware/middleware/passsport');
+const deviceSettingsCtrl = require('../controllers/DeviceSettings.controller');
+router.get('/resource/usage', ppAuthenticate, deviceSettingsCtrl.getDeviceResourceUsage);
+router.get('/disk/usage', ppAuthenticate, deviceSettingsCtrl.getDeviceDiskUsage);
+router.get('/disk/setting', ppAuthenticate, deviceSettingsCtrl.getDeviceDiskSetting);
+router.post('/disk/setting', ppAuthenticate, deviceSettingsCtrl.updateDeviceDiskSetting);
+router.post('/reset', ppAuthenticate, deviceSettingsCtrl.resetSystem);
+router.post('/settings', ppAuthenticate, deviceSettingsCtrl.updateDeviceSettings);
+module.exports = router;

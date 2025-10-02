@@ -1,0 +1,86 @@
+.login-container input:-webkit-autofill,
+.login-container input:-webkit-autofill:hover, 
+.login-container input:-webkit-autofill:focus, 
+.login-container input:-webkit-autofill:active{
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: #ffffff;
+    transition: background-color 5000s ease-in-out 0s;
+    box-shadow: inset 0 0 20px 20px #927f7f29;
+}
+
+body {
+    margin: 0px;
+}
+
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100vh;
+    width: 100vw;
+
+    overflow: hidden;
+
+    background-image: url("../../assets/bg.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    background-color: rgba(0, 0, 0, 0.4);
+    background-blend-mode: overlay;
+}
+
+.login-form {
+    width: 420px;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+    background-color: rgba(46, 46, 46, 0.2);
+    border-radius: 5px;
+    text-align: center;
+}
+
+.login-form img {
+    width: 300px;
+    margin-bottom: 20px;
+}
+
+.login-form .ant-input::placeholder {
+    color: lightgray;
+}
+
+.login-form .ant-input-outlined {
+    border-color: #8f8f8f;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    padding: 10px;
+}
+
+.login-form .ant-input-outlined.ant-input-status-error {
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
+.login-form .ant-input-outlined.ant-input-status-error:hover {
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
+.login-form .ant-input-outlined .ant-input-prefix svg {
+    margin-right: 10px;
+}
+
+.login-form .ant-input-outlined .ant-input-suffix svg {
+    color: #fff;
+}
+
+.login-form .login-form-btn {
+    background-color: #005DFF;
+    border-color: #005DFF;
+    color: #fff;
+    width: 100%;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 18px;
+}
+

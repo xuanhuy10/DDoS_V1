@@ -1,0 +1,163 @@
+.summary-box span {
+    font-weight: 600;
+    color: #8c8c8c;
+    font-size: 14px;
+}
+
+.summary-box .box-info {
+    font-weight: 700;
+    margin-bottom: 0px;
+    font-size: 18px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.summary-box .box-info small {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.status-card {
+    background-color: #ffffff;
+}
+
+.status-card.status-danger {
+    border: 2px solid #EF4A4A;
+}
+
+.status-card.status-safe {
+    border: 2px solid #239713;
+}
+
+.status-card .ant-card-body {
+    padding: 0px;
+}
+
+.status-card .status-title {
+    padding: 5px 10px;
+    width: 100%;
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.status-card.status-danger .status-title {
+    background-color: #EF4A4A;
+}
+
+.status-card.status-safe .status-title {
+    background-color: #239713;
+}
+
+.status-card .status-title img {
+    width: 45px;
+}
+
+.status-card .status-info {
+    padding: 7px;
+    width: 100%;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.status-card.status-danger .status-info span {
+    color: #FF7070;
+}
+
+.status-card.status-safe .status-info span {
+    color: #35D11F;
+}
+
+.db-chart-area {
+    height: 550px; /* Maintain your specified height */
+}
+
+@media (min-height: 960px) {
+    .db-chart-area {
+        height: 720px; /* Adjust height for smaller screens */
+    }
+}
+
+.db-chart-area .ant-card-body {
+    padding: 10px;
+    display: flex;
+    flex-direction: column; 
+    height: 100%; 
+}
+
+.db-chart-area .area-selector {
+    width: 100%;
+}
+
+.db-chart-area h5 {
+    color: #212121;
+    font-weight: 600;
+}
+
+.db-chart-area .area-selector svg {
+    color: #212121;
+}
+
+.db-chart-area .area-selector .tool-bar img {
+    width: 30px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.db-chart-area .chart-container {
+    flex: 1 1 auto; 
+    overflow: auto; 
+    display: flex; 
+    flex-direction: column; 
+}
+
+.db-chart-area .chart-container .ant-row {
+    width: 99.9%;
+    height: 100%;
+    flex: 1 1 auto;
+}
+
+.db-chart-area .chart-container .ant-col {
+    height: 100%;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+}
+
+.db-chart-area .chart-container .echarts-container {
+    width: 100%; /* Make charts fill their container width */
+    height: 100%; /* Make charts fill their container height */
+}
+
+.small-card .title {
+    font-weight: 600;
+    color: #000000;
+    margin-bottom: 5px;
+}
+
+.small-card .icon {
+    color: #000000;
+}
+
+.summary-chart-container {
+    padding: 10px;
+}
+
+.summary-chart-container .chart-type-buttons {
+    /* make height fit inside content */
+    width: 100%;
+}
+
+
+.active-chart-btn[data-type="protocol"] {
+  box-shadow: 0 0 0 2px #36CFC9;
+  transform: scale(1.05);
+  transition: all 0.2s ease-in-out;
+}
+
+.active-chart-btn[data-type="attack"] {
+  box-shadow: 0 0 0 2px #ff4d4f;
+  transform: scale(1.05);
+  transition: all 0.2s ease-in-out;
+}
