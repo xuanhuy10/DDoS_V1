@@ -1299,153 +1299,153 @@
             }
         }
     }
-    // void  UpdateIPSecProfileInDB(int serial_port)
-    // {
-    //     sqlite3 *db;
-    //     char sql[1024];
-    //     int rc;
-    //     int id;
-
-    //     printf("Enter IPSecProfileId to update: ");
-    //     scanf("%d", &id);
-    //     getchar(); // clear buffer
-
-    //     char newName[128], newDesc[256];
-
-    //     printf("Enter new ProfileName: ");
-    //     fgets(newName, sizeof(newName), stdin);
-    //     newName[strcspn(newName, "\n")] = 0;
-
-    //     printf("Enter new ProfileDescription: ");
-    //     fgets(newDesc, sizeof(newDesc), stdin);
-    //     newDesc[strcspn(newDesc, "\n")] = 0;
-
-    //     rc = sqlite3_open(DB_PATH, &db);
-    //     if (rc != SQLITE_OK)
-    //     {
-    //         printf("Cannot open database: %s\n", sqlite3_errmsg(db));
-    //         return;
-    //     }
-
-    //     snprintf(sql, sizeof(sql),
-    //             "UPDATE IPSecProfiles SET ProfileName=?, ProfileDescription=?, LastModified=datetime('now') WHERE IPSecProfileId=?;");
-
-    //     sqlite3_stmt *stmt;
-    //     rc = sqlite3_prepare_v2(db, sql, -1, &stmt, 0);
-    //     if (rc != SQLITE_OK)
-    //     {
-    //         printf("Failed to prepare statement: %s\n", sqlite3_errmsg(db));
-    //         sqlite3_close(db);
-    //         return;
-    //     }
-
-    //     sqlite3_bind_text(stmt, 1, newName, -1, SQLITE_STATIC);
-    //     sqlite3_bind_text(stmt, 2, newDesc, -1, SQLITE_STATIC);
-    //     sqlite3_bind_int(stmt, 3, id);
-
-    //     rc = sqlite3_step(stmt);
-    //     if (rc == SQLITE_DONE)
-    //     {
-    //         printf("Profile updated successfully.\n");
-    //     }
-    //     else
-    //     {
-    //         printf("Update failed: %s\n", sqlite3_errmsg(db));
-    //     }
-
-    //     sqlite3_finalize(stmt);
-    //     sqlite3_close(db);
-    // }
-
-    void UpdateIPSecProfileInDB()
-{
-    sqlite3 *db;
-    sqlite3_stmt *stmt;
-    char sql[2048];
-    int rc, id;
-
-    printf("Enter IPSecProfileId to update: ");
-    scanf("%d", &id);
-    getchar(); // clear buffer
-
-    // ===== Input từ user =====
-    int userId, ikeReauth, rekeyTime, enable, connCount;
-    char name[128], desc[256], localGW[64], remoteGW[64];
-    char ikeVer[16], mode[32], proto[32];
-    char encrypt[64], hash[64];
-    char subnetLocal[64], subnetRemote[64], usingTime[64];
-
-    printf("UserId: "); scanf("%d", &userId); getchar();
-    printf("ProfileName: "); fgets(name, sizeof(name), stdin); name[strcspn(name, "\n")] = 0;
-    printf("ProfileDescription: "); fgets(desc, sizeof(desc), stdin); desc[strcspn(desc, "\n")] = 0;
-    printf("LocalGateway: "); fgets(localGW, sizeof(localGW), stdin); localGW[strcspn(localGW, "\n")] = 0;
-    printf("RemoteGateway: "); fgets(remoteGW, sizeof(remoteGW), stdin); remoteGW[strcspn(remoteGW, "\n")] = 0;
-    printf("IKEVersion: "); fgets(ikeVer, sizeof(ikeVer), stdin); ikeVer[strcspn(ikeVer, "\n")] = 0;
-    printf("Mode: "); fgets(mode, sizeof(mode), stdin); mode[strcspn(mode, "\n")] = 0;
-    printf("ESPAHProtocol: "); fgets(proto, sizeof(proto), stdin); proto[strcspn(proto, "\n")] = 0;
-    printf("IKEReauthTime: "); scanf("%d", &ikeReauth); getchar();
-    printf("EncryptionAlgorithm: "); fgets(encrypt, sizeof(encrypt), stdin); encrypt[strcspn(encrypt, "\n")] = 0;
-    printf("HashAlgorithm: "); fgets(hash, sizeof(hash), stdin); hash[strcspn(hash, "\n")] = 0;
-    printf("ReKeyTime: "); scanf("%d", &rekeyTime); getchar();
-    printf("Enable (0/1): "); scanf("%d", &enable); getchar();
-    printf("UsingTime: "); fgets(usingTime, sizeof(usingTime), stdin); usingTime[strcspn(usingTime, "\n")] = 0;
-    printf("SubnetLocalGateway: "); fgets(subnetLocal, sizeof(subnetLocal), stdin); subnetLocal[strcspn(subnetLocal, "\n")] = 0;
-    printf("SubnetRemoteGateway: "); fgets(subnetRemote, sizeof(subnetRemote), stdin); subnetRemote[strcspn(subnetRemote, "\n")] = 0;
-    printf("ConnectionCount: "); scanf("%d", &connCount); getchar();
-
-    // ===== Open DB =====
-    rc = sqlite3_open(DB_PATH, &db);
-    if (rc != SQLITE_OK)
+    void  UpdateIPSecProfileInDB(int serial_port)
     {
-        printf("Cannot open database: %s\n", sqlite3_errmsg(db));
-        return;
-    }
+        sqlite3 *db;
+        char sql[1024];
+        int rc;
+        int id;
 
-    snprintf(sql, sizeof(sql),
-        "UPDATE IPSecProfiles SET "
-        "UserId=?, ProfileName=?, ProfileDescription=?, LocalGateway=?, RemoteGateway=?, "
-        "IKEVersion=?, Mode=?, ESPAHProtocol=?, IKEReauthTime=?, EncryptionAlgorithm=?, HashAlgorithm=?, "
-        "ReKeyTime=?, Enable=?, LastModified=datetime('now'), UsingTime=?, "
-        "SubnetLocalGateway=?, SubnetRemoteGateway=?, ConnectionCount=? "
-        "WHERE IPSecProfileId=?;");
+        printf("Enter IPSecProfileId to update: ");
+        scanf("%d", &id);
+        getchar(); // clear buffer
 
-    rc = sqlite3_prepare_v2(db, sql, -1, &stmt, 0);
-    if (rc != SQLITE_OK)
-    {
-        printf("Failed to prepare statement: %s\n", sqlite3_errmsg(db));
+        char newName[128], newDesc[256];
+
+        printf("Enter new ProfileName: ");
+        fgets(newName, sizeof(newName), stdin);
+        newName[strcspn(newName, "\n")] = 0;
+
+        printf("Enter new ProfileDescription: ");
+        fgets(newDesc, sizeof(newDesc), stdin);
+        newDesc[strcspn(newDesc, "\n")] = 0;
+
+        rc = sqlite3_open(DB_PATH, &db);
+        if (rc != SQLITE_OK)
+        {
+            printf("Cannot open database: %s\n", sqlite3_errmsg(db));
+            return;
+        }
+
+        snprintf(sql, sizeof(sql),
+                "UPDATE IPSecProfiles SET ProfileName=?, ProfileDescription=?, LastModified=datetime('now') WHERE IPSecProfileId=?;");
+
+        sqlite3_stmt *stmt;
+        rc = sqlite3_prepare_v2(db, sql, -1, &stmt, 0);
+        if (rc != SQLITE_OK)
+        {
+            printf("Failed to prepare statement: %s\n", sqlite3_errmsg(db));
+            sqlite3_close(db);
+            return;
+        }
+
+        sqlite3_bind_text(stmt, 1, newName, -1, SQLITE_STATIC);
+        sqlite3_bind_text(stmt, 2, newDesc, -1, SQLITE_STATIC);
+        sqlite3_bind_int(stmt, 3, id);
+
+        rc = sqlite3_step(stmt);
+        if (rc == SQLITE_DONE)
+        {
+            printf("Profile updated successfully.\n");
+        }
+        else
+        {
+            printf("Update failed: %s\n", sqlite3_errmsg(db));
+        }
+
+        sqlite3_finalize(stmt);
         sqlite3_close(db);
-        return;
     }
 
-    // ===== Gán giá trị (bind) =====
-    sqlite3_bind_int(stmt, 1, userId);
-    sqlite3_bind_text(stmt, 2, name, -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 3, desc, -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 4, localGW, -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 5, remoteGW, -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 6, ikeVer, -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 7, mode, -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 8, proto, -1, SQLITE_STATIC);
-    sqlite3_bind_int(stmt, 9, ikeReauth);
-    sqlite3_bind_text(stmt, 10, encrypt, -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 11, hash, -1, SQLITE_STATIC);
-    sqlite3_bind_int(stmt, 12, rekeyTime);
-    sqlite3_bind_int(stmt, 13, enable);
-    sqlite3_bind_text(stmt, 14, usingTime, -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 15, subnetLocal, -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 16, subnetRemote, -1, SQLITE_STATIC);
-    sqlite3_bind_int(stmt, 17, connCount);
-    sqlite3_bind_int(stmt, 18, id);
+//     void UpdateIPSecProfileInDB()
+// {
+//     sqlite3 *db;
+//     sqlite3_stmt *stmt;
+//     char sql[2048];
+//     int rc, id;
 
-    rc = sqlite3_step(stmt);
-    if (rc == SQLITE_DONE)
-        printf("✅ Profile updated successfully.\n");
-    else
-        printf("❌ Update failed: %s\n", sqlite3_errmsg(db));
+//     printf("Enter IPSecProfileId to update: ");
+//     scanf("%d", &id);
+//     getchar(); // clear buffer
 
-    sqlite3_finalize(stmt);
-    sqlite3_close(db);
-}
+//     // ===== Input từ user =====
+//     int userId, ikeReauth, rekeyTime, enable, connCount;
+//     char name[128], desc[256], localGW[64], remoteGW[64];
+//     char ikeVer[16], mode[32], proto[32];
+//     char encrypt[64], hash[64];
+//     char subnetLocal[64], subnetRemote[64], usingTime[64];
+
+//     printf("UserId: "); scanf("%d", &userId); getchar();
+//     printf("ProfileName: "); fgets(name, sizeof(name), stdin); name[strcspn(name, "\n")] = 0;
+//     printf("ProfileDescription: "); fgets(desc, sizeof(desc), stdin); desc[strcspn(desc, "\n")] = 0;
+//     printf("LocalGateway: "); fgets(localGW, sizeof(localGW), stdin); localGW[strcspn(localGW, "\n")] = 0;
+//     printf("RemoteGateway: "); fgets(remoteGW, sizeof(remoteGW), stdin); remoteGW[strcspn(remoteGW, "\n")] = 0;
+//     printf("IKEVersion: "); fgets(ikeVer, sizeof(ikeVer), stdin); ikeVer[strcspn(ikeVer, "\n")] = 0;
+//     printf("Mode: "); fgets(mode, sizeof(mode), stdin); mode[strcspn(mode, "\n")] = 0;
+//     printf("ESPAHProtocol: "); fgets(proto, sizeof(proto), stdin); proto[strcspn(proto, "\n")] = 0;
+//     printf("IKEReauthTime: "); scanf("%d", &ikeReauth); getchar();
+//     printf("EncryptionAlgorithm: "); fgets(encrypt, sizeof(encrypt), stdin); encrypt[strcspn(encrypt, "\n")] = 0;
+//     printf("HashAlgorithm: "); fgets(hash, sizeof(hash), stdin); hash[strcspn(hash, "\n")] = 0;
+//     printf("ReKeyTime: "); scanf("%d", &rekeyTime); getchar();
+//     printf("Enable (0/1): "); scanf("%d", &enable); getchar();
+//     printf("UsingTime: "); fgets(usingTime, sizeof(usingTime), stdin); usingTime[strcspn(usingTime, "\n")] = 0;
+//     printf("SubnetLocalGateway: "); fgets(subnetLocal, sizeof(subnetLocal), stdin); subnetLocal[strcspn(subnetLocal, "\n")] = 0;
+//     printf("SubnetRemoteGateway: "); fgets(subnetRemote, sizeof(subnetRemote), stdin); subnetRemote[strcspn(subnetRemote, "\n")] = 0;
+//     printf("ConnectionCount: "); scanf("%d", &connCount); getchar();
+
+//     // ===== Open DB =====
+//     rc = sqlite3_open(DB_PATH, &db);
+//     if (rc != SQLITE_OK)
+//     {
+//         printf("Cannot open database: %s\n", sqlite3_errmsg(db));
+//         return;
+//     }
+
+//     snprintf(sql, sizeof(sql),
+//         "UPDATE IPSecProfiles SET "
+//         "UserId=?, ProfileName=?, ProfileDescription=?, LocalGateway=?, RemoteGateway=?, "
+//         "IKEVersion=?, Mode=?, ESPAHProtocol=?, IKEReauthTime=?, EncryptionAlgorithm=?, HashAlgorithm=?, "
+//         "ReKeyTime=?, Enable=?, LastModified=datetime('now'), UsingTime=?, "
+//         "SubnetLocalGateway=?, SubnetRemoteGateway=?, ConnectionCount=? "
+//         "WHERE IPSecProfileId=?;");
+
+//     rc = sqlite3_prepare_v2(db, sql, -1, &stmt, 0);
+//     if (rc != SQLITE_OK)
+//     {
+//         printf("Failed to prepare statement: %s\n", sqlite3_errmsg(db));
+//         sqlite3_close(db);
+//         return;
+//     }
+
+//     // ===== Gán giá trị (bind) =====
+//     sqlite3_bind_int(stmt, 1, userId);
+//     sqlite3_bind_text(stmt, 2, name, -1, SQLITE_STATIC);
+//     sqlite3_bind_text(stmt, 3, desc, -1, SQLITE_STATIC);
+//     sqlite3_bind_text(stmt, 4, localGW, -1, SQLITE_STATIC);
+//     sqlite3_bind_text(stmt, 5, remoteGW, -1, SQLITE_STATIC);
+//     sqlite3_bind_text(stmt, 6, ikeVer, -1, SQLITE_STATIC);
+//     sqlite3_bind_text(stmt, 7, mode, -1, SQLITE_STATIC);
+//     sqlite3_bind_text(stmt, 8, proto, -1, SQLITE_STATIC);
+//     sqlite3_bind_int(stmt, 9, ikeReauth);
+//     sqlite3_bind_text(stmt, 10, encrypt, -1, SQLITE_STATIC);
+//     sqlite3_bind_text(stmt, 11, hash, -1, SQLITE_STATIC);
+//     sqlite3_bind_int(stmt, 12, rekeyTime);
+//     sqlite3_bind_int(stmt, 13, enable);
+//     sqlite3_bind_text(stmt, 14, usingTime, -1, SQLITE_STATIC);
+//     sqlite3_bind_text(stmt, 15, subnetLocal, -1, SQLITE_STATIC);
+//     sqlite3_bind_text(stmt, 16, subnetRemote, -1, SQLITE_STATIC);
+//     sqlite3_bind_int(stmt, 17, connCount);
+//     sqlite3_bind_int(stmt, 18, id);
+
+//     rc = sqlite3_step(stmt);
+//     if (rc == SQLITE_DONE)
+//         printf("✅ Profile updated successfully.\n");
+//     else
+//         printf("❌ Update failed: %s\n", sqlite3_errmsg(db));
+
+//     sqlite3_finalize(stmt);
+//     sqlite3_close(db);
+// }
 
     void DeleteIPSecProfileFromDB(int serial_port)
     {
