@@ -1,11 +1,14 @@
 # 🛡️ AntiDDoS Safe Install & Usage Guide
 
-> ⚠️ WARNING: Only use this project in an isolated, authorized testing environment.  
-> Do **not** deploy or run this software against systems you do not own or have explicit permission to test.
+> ⚠️ WARNING: Only use this project in an isolated, authorized testing
+> environment.\
+> Do **not** deploy or run this software against systems you do not own or have
+> explicit permission to test.
 
 ---
 
 ### 🚀 Steps
+
 #### 1. Clone the Repo:
 
 ```bash
@@ -22,6 +25,7 @@ sudo make install
 source ~/.bashrc
 start   # or: restart
 ```
+
 #### 3. Optional step-by-step (skip if already installed)
 
 ```bash
@@ -45,14 +49,11 @@ source ~/.bashrc
 # build commands (printed for copy/paste)
 make build_cli
 make build_gui
-
 ```
+
 #### 4. Run
 
 ```bash
 start    # attach to existing menu_session if running
 restart  # start/refresh menu_session and attach
 ```
-
-
-
