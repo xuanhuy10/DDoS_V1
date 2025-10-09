@@ -24,10 +24,11 @@ sudo make install
 
 ```
 
-#### 3. Optional step-by-step (skip if already installed) (if you install auto done skip step 3 )
+#### 3. Optional: Manual step-by-step (skip if you used automatic install)
 
 ```bash
-open file  install_manual.md and install srep by step 
+# Open the install_manual.md file and follow the steps in it.
+sudo nano install_manual.md 
 ```
 
 #### 4. Run
