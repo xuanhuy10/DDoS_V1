@@ -9,40 +9,49 @@
 #### 1. Clone the Repo:
 
 ```bash
-git clone https://github.com/xuanhuy10/DDoS_V1.gitt
+git clone https://github.com/xuanhuy10/DDoS_V1.git
 cd DDoS_V1
 ```
 
-#### 2. Set up enviroment (auto)
+#### 2. Set up environment (auto)
 
 ```bash
-# Run this command to automatically set up the environmen 
+# Automatic setup (deps + B1..B9 + wolfSSL)
 sudo make install
+# load aliases then start menu
+source ~/.bashrc
+start   # or: restart
 ```
-#### 4. Optional Step-by-Step Build (skip if already installed)
+#### 3. Optional step-by-step (skip if already installed)
 
 ```bash
-# in project directory
-make dirs        # create necessary directories
-make wiringpi    # clone + build WiringPi (if needed)
-make i2c         # clone + build i2c (if needed)
-make wolfssl     # clone + build wolfssl (if needed)
-make build       # compile gui/cli (if source exists)
+# from project directory
+make help
+
+sudo make create_folder
+sudo make B1_WiringPi      # build wiringpi_3.16_arm64.deb in project
+make B2_i2c                # install i2c locally into ./local
+make wolfssl               # install wolfSSL locally into ./local
+
+sudo make B7_tmux_install  # install tmux and libs
+make B8_tmux_conf          # write ~/.tmux.conf
+
+make B3_desktop            # create desktop launcher
+make B4_autostart_copy     # enable autostart
+make B6_chmod              # permissions
+make B9_bashrc_aliases     # add aliases
+
+source ~/.bashrc
+# build commands (printed for copy/paste)
+make build_cli
+make build_gui
 
 ```
-#### 5 run 
+#### 4. Run
 
 ```bash
- # Attach to the existing tmux session named 'menu_session'.
-# If the session is already running, this brings it to your terminal.
-start  
-
-# Start a new tmux session running start_menu.sh, or restart if the session already exists.
-# 1. Create a new detached session called 'menu_session' running the menu script.
-# 2. Sleep briefly to allow terminal resize/initialization.
-# 3. Set terminal size to 59 rows x 230 columns.
-# 4. Attach to the new tmux session to interact with the menu.
-restart  
+start    # attach to existing menu_session if running
+restart  # start/refresh menu_session and attach
 ```
 
 
