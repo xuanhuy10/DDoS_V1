@@ -1,0 +1,28 @@
+.UserManagerHeader {
+    padding: 1px 10px;
+    font-size: 1.2em;
+    font-weight: 600;   
+}
+
+.UserManagerHeader svg {
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+.add-user-modal .notification-settings {
+    margin-bottom: 16px;
+}
+
+.add-user-modal .notification-settings .ant-collapse-header {
+    padding: 0;
+}
+
+.add-user-modal .notification-settings .ant-collapse-content-box {
+    padding-block: 0;
+    padding: 0;
+}
+
+.add-user-modal .notification-settings .ant-collapse-content-box .ant-form-item {
+    margin-bottom: 0;
+    padding: 5px 0px;
+}

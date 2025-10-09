@@ -1,0 +1,56 @@
+.attack_card_title {
+    font-size: 1rem;
+    font-weight: 600;
+}
+.attacking_card_title {
+    font-size: 1rem;
+    font-weight: 800;
+    animation: effect 2s linear infinite;;
+}
+@keyframes effect{
+    0%{
+        color: #FF4251;
+    }
+
+    100%{
+        color:black;
+    }
+}
+.attacking_card {
+    border:  solid;
+    animation: effect 2s linear infinite;;
+
+}
+
+.attack_card_stats {
+    width: 100%;
+    border-radius: 0.5rem;
+    background-color: #f5f5f5;
+    padding: 0.5rem;
+}
+
+.attacks-detail .attacks-data {
+    width: 27%;
+    padding: 7px;
+}
+
+.attacks-detail .attacks-data .attack-counter {
+    font-size: 1.2rem;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 4px; 
+    color: white;
+    margin-right: 9px;
+}
+
+.attacks-detail .attacks-data p {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.attacks-detail .attacks-data .unit {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #666;
+}

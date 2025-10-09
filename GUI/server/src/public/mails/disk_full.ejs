@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DISK FULL WARNING</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      padding: 40px 30px;
+      max-width: 700px;
+      width: 100%;
+      background-color: #f9f9f9;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .warning-logo {
+      width: 350px;
+      max-width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .warning-disk {
+      width: 120px;
+      height: auto;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      color: red;
+      font-size: 44px;
+      font-weight: bold;
+      margin: 0;
+      text-align: center;
+    }
+
+    p {
+      font-size: 18px;
+      color: #333;
+      margin: 0;
+      line-height: 1.7;
+      text-align: center;
+      max-width: 600px;
+    }
+
+    .important {
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    .disk-usage {
+      color: red;
+      font-size: 34px;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .log-button {
+      background-color: red;
+      color: white;
+      padding: 14px 36px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      margin: 20px 0;
+    }
+
+    .log-button:hover {
+      background-color: #b30000;
+    }
+
+    .footer {
+      font-size: 14px;
+      color: #888;
+      line-height: 1.6;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .content-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="content-section">
+      <img src="cid:warninglogo" alt="SYSNET DEF V1.0" class="warning-logo">
+      <img src="cid:disklogo" alt="Disk Full" class="warning-disk">
+      <h1>DISK FULL!!!</h1>
+    </div>
+
+    <div class="content-section">
+      <p>The current disk usage has exceeded the safe threshold and may cause system instability or data loss. Please free up some space immediately.</p>
+      <p class="important">Time: <%= time %></p>
+      <div class="disk-usage">Disk Usage: <%= diskUsage %>%</div>
+    </div>
+
+    <div class="content-section">
+      <form action="/disk-log">
+        <button class="log-button">DISK LOG</button>
+      </form>
+      <p>Clicking on the button will take you to the disk usage log page.</p>
+    </div>
+
+    <div class="footer">
+      ACRONICS SOLUTIONS Inc. All Rights Reserved<br>
+      03 Quang Trung, Hai Chau 1, Hai Chau, Da Nang
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+.config-tabs {
+    width: 100%;
+}
+
+.config-tabs .config-panes {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 7px;
+    background-color: #ffffff;
+}
+
+.summarize-pane {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 7px;
+    background-color: #ffffff;
+}
+
+.config-tabs .config-panes .config-title {
+    margin-bottom: 10px;
+}

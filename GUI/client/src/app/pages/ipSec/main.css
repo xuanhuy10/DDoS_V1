@@ -1,0 +1,8 @@
+large-error-message {
+  font-size: 20px !important;
+}
+
+/* Or if you need to target the message content specifically
+.large-error-message .ant-message-custom-content {
+  font-size: 20px !important;
+} */

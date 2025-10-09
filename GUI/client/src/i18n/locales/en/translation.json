@@ -1,0 +1,24 @@
+{
+    "common": {
+        "traffic": "Traffic"
+    },
+    "traffic": 
+    {
+        "variant": {
+            "bypass": "Bypass",
+            "drop": "Drop",
+            "anomaly": "Anomaly"
+        },
+        "status": {
+            "peace": "on processing",
+            "attack": "under attack"
+        },
+        "action": {
+            "receive": "receive",
+            "drop": "drop"
+        }
+    },
+    "defense": {
+
+    }
+}
