@@ -22,8 +22,6 @@ cd DDoS_V1
 # Automatic setup (deps + B1..B9 + wolfSSL)
 sudo make install
 # load aliases then start menu
-source ~/.bashrc
-start   # or: restart
 ```
 
 #### 3. Optional step-by-step (skip if already installed)
