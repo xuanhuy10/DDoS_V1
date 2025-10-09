@@ -1,0 +1,23 @@
+## AntiDDoS - Hướng dẫn chạy (Tự động và Thủ công)
+
+1) Tự động bằng Makefile
+- cd /home/antiddos/DDoS_V1
+- make help
+- sudo make install
+- source ~/.bashrc
+- start hoặc restart
+
+2) Chạy lẻ các bước (tùy chọn)
+- sudo make deps create_folder B1_WiringPi
+- make B2_i2c wolfssl
+- sudo make B7_tmux_install
+- make B8_tmux_conf B3_desktop B4_autostart_copy B6_chmod B9_bashrc_aliases
+
+3) Thủ công theo tài liệu
+- Làm theo file: installation guide (manual)_ras.md (B1→B9 và phần wolfSSL)
+- Sau khi xong: source ~/.bashrc rồi dùng start hoặc restart
+
+Ghi chú
+- Makefile build WiringPi .deb trong thư mục dự án (mặc định không cài hệ thống)
+- i2c và wolfSSL cài cục bộ vào /home/antiddos/DDoS_V1/local
+- Nếu cần dùng .so cục bộ: export LD_LIBRARY_PATH=/home/antiddos/DDoS_V1/local/lib:$LD_LIBRARY_PATH
