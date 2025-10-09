@@ -462,9 +462,6 @@
     // SAVE CONFIGURATION
     void ConfirmAndSaveConfig(int serial_port);
     void clear_input();
-    // void inject_fake_packet(int type) ;
-    //  void test_attack();
-    //  void generate_random_packet(uint8_t *packet, int is_attack);
     void select_multi_port_menu(int serial_port);
     void select_multi_port(int serial_port, sqlite3 *db, int profile_id);
     // void select_multi_port(int serial_port, sqlite3 *db, int profile_id);void select_multi_port(int serial_port);
