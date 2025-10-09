@@ -8,7 +8,7 @@ WOLFSSL_REPO ?= https://github.com/wolfSSL/wolfssl.git
 WIRINGPI_DEB_NAME ?= wiringpi_3.16_arm64.deb
 
 SHELL := /bin/bash
-.PHONY: install help dirs deps wiringpi i2c desktop autostart permissions tmuxconf bashrc source wolfssl build  clean
+.PHONY: install help dirs deps wiringpi i2c desktop autostart permissions tmuxconf bashrc source wolfssl build clean
 
 # all: dirs deps wiringpi i2c desktop autostart permissions tmuxconf bashrc wolfssl build
 # 	@echo "Installation steps completed (or attempted). Review output above for errors."
@@ -361,7 +361,7 @@ build:
 		echo "Warning: $(PREFIX)/gui.c not found, skipping gui build"; \
 	fi
 	@if [ -f "$(PREFIX)/cli_working.c" ]; then \
-		gcc "$(PREFIX)/cli_working.c" -o "$(PREFIX)/cli1" -li2c1602 -lwiringPi -lpthread -lncurses -lcurl `pkg-config --cflags --libs glib-2.0` -L/usr/local/lib -lwolfssl -lcjson -lsqlite3 -ljansson ; \
+		gcc "$(PREFIX)/cli_working.c" -o "$(PREFIX)/cli" -li2c1602 -lwiringPi -lpthread -lncurses -lcurl `pkg-config --cflags --libs glib-2.0` -L/usr/local/lib -lwolfssl -lcjson -lsqlite3 -ljansson ; \
 	else \
 		echo "Warning: $(PREFIX)/cli_working.c not found, skipping cli build"; \
 	fi

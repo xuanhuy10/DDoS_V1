@@ -562,9 +562,9 @@
     int Threshold_time_counter;
     const char *previous_mode = "/home/antiddos/DDoS_V1/Setting/mode.conf";
 
+    #define CONFIG_FILE "/home/antiddos/DDoS_V1/Setting/config_auto_manual.conf"
     const char *threshold_logfile = "/home/antiddos/DDoS_V1/Setting/threshold_logfile.conf";
     const char *time_counter = "/home/antiddos/DDoS_V1/Setting/time_counter.conf";
-    #define CONFIG_FILE "/home/antiddos/DDoS_V1/Setting/config_auto_manual.conf"
     volatile bool auto_delete_logs;
     volatile int stop_scrolling = 0;
     bool reset_program = false;
@@ -10792,7 +10792,7 @@
         FILE *file = fopen(time_counter, "w");
         if (file == NULL)
         {
-            printf(C3 "\r\n\t\tCannot open file %s\n" RE "", time_counter);
+            printf(C3 "\r\n\t\tCannot open file1 %s\n", time_counter);
             exit(1);
         }
 
@@ -10849,17 +10849,17 @@
             file = fopen(threshold_logfile, "w");
             if (file == NULL)
             {
-                printf(C3 "Error creating config file: %s\n" RE "", threshold_logfile);
+                printf(C3 "Error creating config file: %s\n", threshold_logfile);
                 exit(1);
             }
-            fprintf(file, "" C3 "80" RE "");
+            fprintf(file, "80");
             fclose(file);
         }
         else
         {
             if (fscanf(file, "%f", &Threshold_SD) != 1)
             {
-                printf(C3 "\r\n\t\tCannot open file \n" RE);
+                printf(C3 "\r\n\t\tCannot open file2 \n" );
                 fclose(file);
                 exit(1);
             }
@@ -10874,10 +10874,10 @@
         FILE *file = fopen(threshold_logfile, "w");
         if (file == NULL)
         {
-            printf(C3 "Cannot open file %s\n" RE "", threshold_logfile);
+            printf(C3 "Cannot open file3 %s\n" , threshold_logfile);
             exit(1);
         }
-        fprintf(file, "" C3 "%f\n" RE "", Threshold_SD);
+        fprintf(file,"%f\n" , Threshold_SD);
 
         fclose(file);
     }
@@ -11985,7 +11985,7 @@
         FILE *file = fopen(previous_mode, "w");
         if (file == NULL)
         {
-            printf(C3 "Cannot open file %s\n" RE "", previous_mode);
+            printf(C3 "Cannot open file4 %s\n" , previous_mode);
             exit(1);
         }
         fprintf(file, "%c\n", '2');
@@ -12003,7 +12003,7 @@
             FILE *file = fopen(filename, "w");
             if (file == NULL)
             {
-                perror(C3 "Err create file http log" RE);
+                perror( "Err create file http log" );
                 exit(EXIT_FAILURE);
             }
             fclose(file);
@@ -12045,7 +12045,7 @@
         while (!g_queue_is_empty(batch_queue))
         {
             char *ip = g_queue_pop_head(batch_queue);
-            fprintf(file, "" C3 "%s\n" RE "", ip);
+            fprintf(file, "%s\n", ip);
             g_free(ip);
         }
 

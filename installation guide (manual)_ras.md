@@ -366,4 +366,4 @@ B5
 <!-- biên dịch GUI : -->
 gcc gui.c -o gui -li2c1602 -lwiringPi -lpthread -lncurses -lcurl `pkg-config --cflags --libs wolfssl glib-2.0` -I/usr/local/include -L/usr/local/lib -lwolfssl
 <!-- Biên dịch CLI : -->
-gcc cli\_working.c -o cli1 -li2c1602 -lwiringPi -lpthread -lncurses -lcurl `pkg-config --cflags --libs glib-2.0` -L/usr/local/lib -lwolfssl -lcjson -lsqlite3 -ljansson
+gcc cli_working.c -o cli1 -li2c1602 -lwiringPi -lpthread -lncurses -lcurl `pkg-config --cflags --libs glib-2.0` -L/usr/local/lib -lwolfssl -lcjson -lsqlite3 -ljansson
