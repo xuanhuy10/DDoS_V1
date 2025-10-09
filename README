@@ -1,23 +1,49 @@
-## AntiDDoS - Hướng dẫn chạy (Tự động và Thủ công)
+# 🛡️ AntiDDoS Safe Install & Usage Guide
 
-1) Tự động bằng Makefile
-- cd /home/antiddos/DDoS_V1
-- make help
-- sudo make install
-- source ~/.bashrc
-- start hoặc restart
+> ⚠️ WARNING: Only use this project in an isolated, authorized testing environment.  
+> Do **not** deploy or run this software against systems you do not own or have explicit permission to test.
 
-2) Chạy lẻ các bước (tùy chọn)
-- sudo make deps create_folder B1_WiringPi
-- make B2_i2c wolfssl
-- sudo make B7_tmux_install
-- make B8_tmux_conf B3_desktop B4_autostart_copy B6_chmod B9_bashrc_aliases
+---
 
-3) Thủ công theo tài liệu
-- Làm theo file: installation guide (manual)_ras.md (B1→B9 và phần wolfSSL)
-- Sau khi xong: source ~/.bashrc rồi dùng start hoặc restart
+### 🚀 Steps
+#### 1. Clone the Repo:
 
-Ghi chú
-- Makefile build WiringPi .deb trong thư mục dự án (mặc định không cài hệ thống)
-- i2c và wolfSSL cài cục bộ vào /home/antiddos/DDoS_V1/local
-- Nếu cần dùng .so cục bộ: export LD_LIBRARY_PATH=/home/antiddos/DDoS_V1/local/lib:$LD_LIBRARY_PATH
+```bash
+git clone https://github.com/xuanhuy10/DDoS_V1.gitt
+cd DDoS_V1
+```
+
+#### 2. Set up enviroment (auto)
+
+```bash
+# Run this command to automatically set up the environmen 
+sudo make install
+```
+#### 4. Optional Step-by-Step Build (skip if already installed)
+
+```bash
+# in project directory
+make dirs        # create necessary directories
+make wiringpi    # clone + build WiringPi (if needed)
+make i2c         # clone + build i2c (if needed)
+make wolfssl     # clone + build wolfssl (if needed)
+make build       # compile gui/cli (if source exists)
+
+```
+#### 5 run 
+
+```bash
+ # Attach to the existing tmux session named 'menu_session'.
+# If the session is already running, this brings it to your terminal.
+start  
+
+# Start a new tmux session running start_menu.sh, or restart if the session already exists.
+# 1. Create a new detached session called 'menu_session' running the menu script.
+# 2. Sleep briefly to allow terminal resize/initialization.
+# 3. Set terminal size to 59 rows x 230 columns.
+# 4. Attach to the new tmux session to interact with the menu.
+restart  
+```
+
+
+
