@@ -8,10 +8,10 @@ WOLFSSL_REPO ?= https://github.com/wolfSSL/wolfssl.git
 WIRINGPI_DEB_NAME ?= wiringpi_3.16_arm64.deb
 
 SHELL := /bin/bash
-.PHONY: all help dirs deps wiringpi i2c wolfssl desktop autostart permissions tmuxconf bashrc build clean
+.PHONY: install help dirs deps wiringpi i2c wolfssl desktop autostart permissions tmuxconf bashrc build clean
 
-all: dirs deps wiringpi i2c desktop autostart permissions tmuxconf bashrc wolfssl build
-	@echo "Installation steps completed (or attempted). Review output above for errors."
+# all: dirs deps wiringpi i2c desktop autostart permissions tmuxconf bashrc wolfssl build
+# 	@echo "Installation steps completed (or attempted). Review output above for errors."
 install: dirs deps wiringpi i2c wolfssl desktop autostart permissions tmuxconf bashrc build
 	@echo "Installation completed (or attempted)." Review output above for errors."
 help:
@@ -280,5 +280,4 @@ clean:
 ###############################################################################
 # ensure PREFIX exists for earlier tasks
 $(PREFIX):
-	@mkdir -p "$(PREFIX)"
 	@echo "Makefile done loading."
