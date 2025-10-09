@@ -45,11 +45,11 @@ dirs:
 deps:
 	@echo "Installing apt packages (will prompt for sudo password)..."
 	sudo apt update
-	sudo apt install tmux
-	sudo apt install libncurses5-dev libncursesw5-dev
-	sudo apt install libcurl4-openssl-dev
-	sudo apt install libglib2.0-dev 
-	sudo apt install -y git tmux libncurses5-dev libncursesw5-dev libcurl4-openssl-dev libglib2.0-dev autoconf automake libtool pkg-config gcc make
+	sudo apt install tmux -Y
+	sudo apt install libncurses5-dev libncursesw5-dev -Y
+	sudo apt install libcurl4-openssl-dev -Y
+	sudo apt install libglib2.0-dev -Y
+	sudo apt install -y git tmux libncurses5-dev libncursesw5-dev libcurl4-openssl-dev libglib2.0-dev autoconf automake libtool pkg-config gcc make -Y
 	@echo "Base packages installed."
 
 ###############################################################################
@@ -224,9 +224,9 @@ tmuxconf:
 bashrc:
 	@echo "Adding aliases to $(HOME_DIR)/.bashrc (if not already present)..."
 	@grep -qxF "alias start='stty rows 59 cols 230; sleep 2; tmux attach -t menu_session'" "$(HOME_DIR)/.bashrc" 2>/dev/null || cat >> "$(HOME_DIR)/.bashrc" <<'EOF'
-alias start='stty rows 59 cols 230; sleep 2; tmux attach -t menu_session'
-alias restart='tmux new-session -d -s menu_session "/bin/bash $(PREFIX)/start_menu.sh"; sleep 2; stty rows 59 cols 230; sleep 2; tmux attach -t menu_session'
-EOF
+	alias start='stty rows 59 cols 230; sleep 2; tmux attach -t menu_session'
+	alias restart='tmux new-session -d -s menu_session "/bin/bash $(PREFIX)/start_menu.sh"; sleep 2; stty rows 59 cols 230; sleep 2; tmux attach -t menu_session'
+	EOF
 	@echo "Aliases added (if they were missing)."
 
 ###############################################################################
