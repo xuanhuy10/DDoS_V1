@@ -21,32 +21,13 @@ cd DDoS_V1
 ```bash
 # Automatic setup (deps + B1..B9 + wolfSSL)
 sudo make install
-# load aliases then start menu
+
 ```
 
-#### 3. Optional step-by-step (skip if already installed)
+#### 3. Optional step-by-step (skip if already installed) (if you install auto done skip step 3 )
 
 ```bash
-# from project directory
-make help
-
-sudo make create_folder
-sudo make B1_WiringPi      # build wiringpi_3.16_arm64.deb in project
-make B2_i2c                # install i2c locally into ./local
-make wolfssl               # install wolfSSL locally into ./local
-
-sudo make B7_tmux_install  # install tmux and libs
-make B8_tmux_conf          # write ~/.tmux.conf
-
-make B3_desktop            # create desktop launcher
-make B4_autostart_copy     # enable autostart
-make B6_chmod              # permissions
-make B9_bashrc_aliases     # add aliases
-
-source ~/.bashrc
-# build commands (printed for copy/paste)
-make build_cli
-make build_gui
+open file  install_manual.md and install srep by step 
 ```
 
 #### 4. Run
