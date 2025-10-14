@@ -1561,91 +1561,12 @@ void AdminConfigMenu(int serial_port)
     }
 }
 
-// void ShowIPSecProfilePreviewFromDB()
-// {
-//     sqlite3 *db;
-//     sqlite3_stmt *stmt;
-//     int rc;
-
-//     rc = sqlite3_open(DB_PATH, &db);
-//     if (rc != SQLITE_OK)
-//     {
-//         printf("Cannot open database: %s\n", sqlite3_errmsg(db));
-//         return;
-//     }
-
-//     const char *sql =
-//         "SELECT IPSecProfileId, ProfileName, ProfileDescription, "
-//         " LocalGateway, RemoteGateway, IKEVersion, Mode, "
-//         "ESPAHProtocol, IKEReauthTime, EncryptionAlgorithm, HashAlgorithm, "
-//         "ReKeyTime, Enable, CreateTime, LastModified, "
-//         "SubnetLocalGateway, SubnetRemoteGateway, ConnectionCount "
-//         "FROM IPSecProfiles ORDER BY IPSecProfileId;";
-
-//     rc = sqlite3_prepare_v2(db, sql, -1, &stmt, 0);
-//     if (rc != SQLITE_OK)
-//     {
-//         printf("Failed to prepare statement: %s\n", sqlite3_errmsg(db));
-//         sqlite3_close(db);
-//         return;
-//     }
-
-//     while (sqlite3_step(stmt) == SQLITE_ROW)
-//     {
-//         system("clear");
-//         display_logo1();
-
-//         printf(C6 "\n========================= " C3 "IPSec Profile Preview" RE " =========================\n" RE);
-
-//         printf(C3 "Profile ID             :" RE " " C6 "%s\n" RE,
-//                sqlite3_column_text(stmt, 0) ? (const char *)sqlite3_column_text(stmt, 0) : "-");
-//         printf(C3 "Profile Name           :" RE " " C6 "%s\n" RE,
-//                sqlite3_column_text(stmt, 1) ? (const char *)sqlite3_column_text(stmt, 1) : "[ Not Set ]");
-//         printf(C3 "Description            :" RE " " C6 "%s\n" RE,
-//                sqlite3_column_text(stmt, 2) ? (const char *)sqlite3_column_text(stmt, 2) : "[ Not Set ]");
-//         printf(C3 "Local Gateway IP       :" RE " " C6 "%s\n" RE,
-//                sqlite3_column_text(stmt, 4) ? (const char *)sqlite3_column_text(stmt, 4) : "[ Not Set ]");
-
-//         printf(C6 "\n========================= " C3 "IKE Configuration" RE " =========================\n" RE);
-
-//         printf(C3 "Remote Gateway IP      :" RE " " C6 "%s\n" RE,
-//                sqlite3_column_text(stmt, 5) ? (const char *)sqlite3_column_text(stmt, 5) : "[ Not Set ]");
-//         printf(C3 "Local Subnet IP        :" RE " " C6 "%s\n" RE,
-//                sqlite3_column_text(stmt, 15) ? (const char *)sqlite3_column_text(stmt, 15) : "[ Not Set ]");
-//         printf(C3 "Remote Subnet IP       :" RE " " C6 "%s\n" RE,
-//                sqlite3_column_text(stmt, 16) ? (const char *)sqlite3_column_text(stmt, 16) : "[ Not Set ]");
-//         printf(C3 "IKEv2 Version          :" RE " " C6 "%s\n" RE,
-//                sqlite3_column_text(stmt, 6) ? (const char *)sqlite3_column_text(stmt, 6) : "[ Not Set ]");
-//         printf(C3 "IKE Mode               :" RE " " C6 "%s\n" RE,
-//                sqlite3_column_text(stmt, 7) ? (const char *)sqlite3_column_text(stmt, 7) : "[ Not Set ]");
-//         printf(C3 "ESP/AH Protocol        :" RE " " C6 "%s\n" RE,
-//                sqlite3_column_text(stmt, 8) ? (const char *)sqlite3_column_text(stmt, 8) : "[ Not Set ]");
-//         printf(C3 "IKE Reauth Time        :" RE " " C6 "%s\n" RE,
-//                sqlite3_column_text(stmt, 9) ? (const char *)sqlite3_column_text(stmt, 9) : "[ Not Set ]");
-//         printf(C3 "Encryption Algorithm   :" RE " " C6 "%s\n" RE,
-//                sqlite3_column_text(stmt, 10) ? (const char *)sqlite3_column_text(stmt, 10) : "[ Not Set ]");
-//         printf(C3 "Hash Algorithm         :" RE " " C6 "%s\n" RE,
-//                sqlite3_column_text(stmt, 11) ? (const char *)sqlite3_column_text(stmt, 11) : "[ Not Set ]");
-//         printf(C3 "Re-key Time            :" RE " " C6 "%s\n" RE,
-//                sqlite3_column_text(stmt, 12) ? (const char *)sqlite3_column_text(stmt, 12) : "[ Not Set ]");
-
-//         printf(C6 "==========================================================================\n" RE);
-
-//         printf("\nPress Enter to continue to next profile...");
-//         int c;
-//         while ((c = getchar()) != '\n' && c != EOF) {}
-//     }
-
-//     sqlite3_finalize(stmt);
-//     sqlite3_close(db);
-// }
- void ShowIPSecProfilePreviewFromDB()
+void ShowIPSecProfilePreviewFromDB()
 {
     sqlite3 *db;
     sqlite3_stmt *stmt;
     int rc;
 
-    // Mở database
     rc = sqlite3_open(DB_PATH, &db);
     if (rc != SQLITE_OK)
     {
@@ -1653,16 +1574,14 @@ void AdminConfigMenu(int serial_port)
         return;
     }
 
-    // Câu lệnh SQL
     const char *sql =
-        "SELECT IPSecProfileId, UserId, ProfileName, ProfileDescription, "
-        "LocalGateway, RemoteGateway, IKEVersion, Mode, "
+        "SELECT ProfileName, "
+        "LocalGateway, RemoteGateway, Mode, "
         "ESPAHProtocol, IKEReauthTime, EncryptionAlgorithm, HashAlgorithm, "
-        "ReKeyTime, Enable, CreateTime, LastModified, "
+        "ReKeyTime, Enable, "
         "SubnetLocalGateway, SubnetRemoteGateway, ConnectionCount "
         "FROM IPSecProfiles ORDER BY IPSecProfileId;";
 
-    // Chuẩn bị statement
     rc = sqlite3_prepare_v2(db, sql, -1, &stmt, 0);
     if (rc != SQLITE_OK)
     {
@@ -1672,46 +1591,78 @@ void AdminConfigMenu(int serial_port)
     }
 
     int col_count = sqlite3_column_count(stmt);
+    int widths[col_count];
+    char *headers[col_count];
 
-    // Tính độ rộng lớn nhất của tên cột
-    int max_field_len = 0;
+    // --- Bước 1: Gán tiêu đề và độ rộng ban đầu bằng độ dài tiêu đề ---
     for (int i = 0; i < col_count; i++)
     {
-        int len = strlen(sqlite3_column_name(stmt, i));
-        if (len > max_field_len)
-            max_field_len = len;
+        headers[i] = (char *)sqlite3_column_name(stmt, i);
+        widths[i] = strlen(headers[i]);
     }
 
-    // In từng profile
+    // --- Bước 2: Tìm độ rộng tối đa giữa tiêu đề và dữ liệu ---
     while (sqlite3_step(stmt) == SQLITE_ROW)
     {
-        // Header bảng
-        printf("+-%-*s-+-%-50s-+\n", max_field_len, "================", "==================================================");
-        printf("| %-*s | %-50s |\n", max_field_len, "Field", "Value");
-        printf("+-%-*s-+-%-50s-+\n", max_field_len, "================", "==================================================");
+        for (int i = 0; i < col_count; i++)
+        {
+            const unsigned char *val = sqlite3_column_text(stmt, i);
+            int len = val ? strlen((const char *)val) : 1;
+            if (len > widths[i])
+                widths[i] = len;
+        }
+    }
 
-        // In từng cột
+    // --- Bước 3: Reset statement để in lại từ đầu ---
+    sqlite3_reset(stmt);
+
+    // --- Bước 4: Hàm in viền ---
+    void print_border()
+    {
+        for (int i = 0; i < col_count; i++)
+        {
+            printf("+");
+            for (int j = 0; j < widths[i] + 2; j++)
+                printf("-");
+        }
+        printf("+\n");
+    }
+
+    // --- In bảng ---
+    printf("\n");
+    print_border();
+
+    // In tiêu đề
+    for (int i = 0; i < col_count; i++)
+    {
+        printf("| %-*s ", widths[i], headers[i]);
+    }
+    printf("|\n");
+    print_border();
+
+    // In dữ liệu
+    while (sqlite3_step(stmt) == SQLITE_ROW)
+    {
         for (int i = 0; i < col_count; i++)
         {
             const unsigned char *val = sqlite3_column_text(stmt, i);
             const char *text = val ? (const char *)val : "-";
-            printf("| %-*s | %-50s |\n", max_field_len, sqlite3_column_name(stmt, i), text);
+            printf("| %-*s ", widths[i], text);
         }
-
-        // Footer bảng
-        printf("+-%-*s-+-%-50s-+\n\n", max_field_len, "================", "==================================================");
+        printf("|\n");
     }
 
-    // Giải phóng statement và đóng DB
+    print_border();
+
     sqlite3_finalize(stmt);
     sqlite3_close(db);
 
-    // Chờ Enter
-    printf("\nPress Enter to continue...");
+    printf("Press Enter to continue...");
     fflush(stdout);
     int c;
-    while ((c = getchar()) != '\n' && c != EOF) {}  // hút hết ký tự còn sót
-    getchar();
+    while ((c = getchar()) != '\n' && c != EOF)
+    {
+    }
     getchar();
 }
 
@@ -1796,7 +1747,9 @@ void ShowIPSecProfileFromDB()
     sqlite3_close(db);
     fflush(stdout);
     int c;
-    while ((c = getchar()) != '\n' && c != EOF) {}  // hút hết ký tự còn sót
+    while ((c = getchar()) != '\n' && c != EOF)
+    {
+    } // hút hết ký tự còn sót
     getchar();
 }
 
@@ -2012,7 +1965,7 @@ Start:
             index = 0;
             DIR *d;
             struct dirent *dir;
-            d = opendir(".");
+            d = opendir("./Setting/certificates");
             if (d)
             {
                 printf("\nAvailable .der files in current directory:\n");
@@ -2154,7 +2107,7 @@ Start:
             index = 0;
             DIR *d;
             struct dirent *dir;
-            d = opendir(".");
+            d = opendir("./Setting/certificates");
             if (d)
             {
                 printf("\nAvailable .der files in current directory:\n");
@@ -2297,7 +2250,7 @@ Start:
             index = 0;
             DIR *d;
             struct dirent *dir;
-            d = opendir(".");
+            d = opendir("./Setting/certificates");
             if (d)
             {
                 printf("\nAvailable .der files in current directory:\n");
@@ -2377,7 +2330,7 @@ void AddconnectionIPSec(int serial_port)
         printf(C6 "+-----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+\n" RE);
         // printf(C6 "+-----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+\n" RE);
 
-        printf(C6 "|" RE "     " C3 "1." RE "    " C6 "|" RE " " C6 "Add new connection in IPSec Profile" RE "                                                                                                                         " C6 "|" RE "\n");
+        printf(C6 "|" RE "     " C3 "2." RE "    " C6 "|" RE " " C6 "Add new connection in IPSec Profile" RE "                                                                                                                         " C6 "|" RE "\n");
         printf(C6 "+-----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+\n" RE);
         printf(C6 "|" RE "     " C17 "Z." RE "    " C6 "|" RE " " C17 "Exit" RE "                                                                                                                                                                                           " C6 "|" RE "\n");
         printf(C6 "+-----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+\n" RE);
@@ -11467,7 +11420,7 @@ void scroll_text1(const char *text1, const char *text2, int delay_ms)
                 }
                 else
                 {
-                    buffer1[i] = ' ';
+                    buffer1[i] = ' ';   
                 }
             }
             lcdLoc(LINE1);

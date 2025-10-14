@@ -8,11 +8,9 @@ WOLFSSL_REPO ?= https://github.com/wolfSSL/wolfssl.git
 WIRINGPI_DEB_NAME ?= wiringpi_3.16_arm64.deb
 
 SHELL := /bin/bash
-.PHONY: install help dirs deps wiringpi i2c desktop autostart permissions tmuxconf bashrc source wolfssl build clean
+.PHONY: install help dirs deps wiringpi i2c desktop autostart permissions tmuxconf bashrc source wolfssl enable_i2c unzip_and_move build clean
 
-# all: dirs deps wiringpi i2c desktop autostart permissions tmuxconf bashrc wolfssl build
-# 	@echo "Installation steps completed (or attempted). Review output above for errors."
-install: dirs deps wiringpi i2c desktop autostart permissions tmuxconf bashrc source wolfssl build clean 
+install: dirs deps wiringpi i2c desktop autostart permissions tmuxconf bashrc source wolfssl enable_i2c unzip_and_move build clean 
 	@echo "Installation completed (or attempted)Review output above for errors."
 help:
 	@echo "Makefile targets:"
@@ -367,6 +365,17 @@ build:
 	fi
 	@echo "Build step finished (check for compiler errors)."
 	@echo "#-----------DONE10-----------#"
+###############################################################################
+enable_i2c:
+	@echo "Starting raspi-config to enable I2C..."
+	sudo raspi-config nonint do_i2c 0
+	@echo "I2C has been enabled successfully!"
+	@echo "#-----------DONE11-----------#
+unzip_and_move:
+	sudo unzip -o /home/antiddos/DDoS_V1/zcu102_zynq_lib.zip -d /tmp/lab_extract
+	sudo cp -r /tmp/lab_extract/* /
+	sudo rm -rf /tmp/lab_extract
+	@echo "#-----------DONE12-----------#"
 
 ###############################################################################
 # Clean (remove clones/build artifacts)
