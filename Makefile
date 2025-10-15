@@ -1,3 +1,7 @@
+
+
+
+
 # Makefile for AntiDDoS installation (based on your manual)
 # Edit HOME_DIR if your user/home path differs (default: /home/antiddos)
 HOME_DIR ?= /home/antiddos
@@ -365,12 +369,12 @@ build:
 	fi
 	@echo "Build step finished (check for compiler errors)."
 	@echo "#-----------DONE10-----------#"
-###############################################################################
+######################################### ######################################
 enable_i2c:
 	@echo "Starting raspi-config to enable I2C..."
 	sudo raspi-config nonint do_i2c 0
 	@echo "I2C has been enabled successfully!"
-	@echo "#-----------DONE11-----------#
+	@echo "#-----------DONE11-----------#"
 unzip_and_move:
 	sudo unzip -o /home/antiddos/DDoS_V1/zcu102_zynq_lib.zip -d /tmp/lab_extract
 	sudo cp -r /tmp/lab_extract/* /
