@@ -82,15 +82,18 @@ wiringpi:
 ###############################################################################
 # i2c
 i2c:
-	@echo "Cloning and building i2c (if not present)..."
-	@if [ ! -d "$(PREFIX)/i2c" ]; then \
-		git clone $(I2C_REPO) "$(PREFIX)/i2c"; \
+	@echo "Downloading and building i2c1602 (if not present)..."
+	@if [ ! -d "$(PREFIX)/i2c1602-main" ]; then \
+		wget -q https://github.com/vinhcatba/i2c1602/archive/refs/heads/main.zip -O main.zip; \
+		unzip -q main.zip; \
+		rm -f main.zip; \
 	else \
-		echo "i2c already cloned in $(PREFIX)/i2c"; \
+		echo "i2c1602 source already exists in $(PREFIX)/i2c1602-main"; \
 	fi
-	@cd "$(PREFIX)/i2c" && make 
-	@cd "$(PREFIX)/i2c" && sudo make install 
+	@cd "$(PREFIX)/i2c1602-main" && make
+	@cd "$(PREFIX)/i2c1602-main" && sudo make install
 	@echo "#-----------DONE3-----------#"
+
 
 ###############################################################################
 # Desktop .desktop file
@@ -358,7 +361,7 @@ wolfssl:
 build:
 	@echo "Compiling GUI and CLI (adjust source filenames if different)..."
 	@if [ -f "$(PREFIX)/gui.c" ]; then \
-		gcc "$(PREFIX)/gui.c" -o "$(PREFIX)/gui" -li2c1602 -lwiringPi -lpthread -lncurses -lcurl `pkg-config --cflags --libs wolfssl glib-2.0` -I/usr/local/include -L/usr/local/lib -lwolfssl ; \
+		gcc -02 "$(PREFIX)/gui.c" -o "$(PREFIX)/gui" -li2c1602 -lwiringPi -lpthread -lncurses -lcurl `pkg-config --cflags --libs wolfssl glib-2.0` -I/usr/local/include -L/usr/local/lib -lwolfssl ; \
 	else \
 		echo "Warning: $(PREFIX)/gui.c not found, skipping gui build"; \
 	fi
