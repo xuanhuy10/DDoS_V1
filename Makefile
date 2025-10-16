@@ -388,8 +388,9 @@ unzip_and_move:
 # Clean (remove clones/build artifacts)
 clean:
 	@echo "Cleaning cloned repos and build artifacts under $(PREFIX) ..."
-	@rm -rf "$(PREFIX)/WiringPi" "$(PREFIX)/i2c" "$(PREFIX)/wolfssl"
-	@rm -f "$(PREFIX)/$(WIRINGPI_DEB_NAME)"
+	# @rm -rf "$(PREFIX)/WiringPi" "$(PREFIX)/i2c" "$(PREFIX)/wolfssl"
+	# @rm -f "$(PREFIX)/$(WIRINGPI_DEB_NAME)"
+    source "$(HOME_DIR)/.bashrc"
 	@echo "Clean done."
 	@echo "#-----------DONE OK-----------#"
 
