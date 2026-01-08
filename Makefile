@@ -328,12 +328,18 @@ bashrc:
 	@echo "Aliases added (if they were missing)."
 	@echo "#-----------DONE8-----------#"
 
+# source: bashrc
+# 	@echo "Sourcing $(HOME_DIR)/.bashrc to apply changes..."
+# 	@source "$(HOME_DIR)/.bashrc"
+# 	@echo "Sourced .bashrc."
+# 	@bash -c 'source "$(HOME_DIR)/.bashrc";
+# 	@echo "#-----------DONE8-----------#"
 source: bashrc
 	@echo "Sourcing $(HOME_DIR)/.bashrc to apply changes..."
-	@source "$(HOME_DIR)/.bashrc"
+	@bash -c "source $(HOME_DIR)/.bashrc"
 	@echo "Sourced .bashrc."
-	@bash -c 'source "$(HOME_DIR)/.bashrc";
 	@echo "#-----------DONE8-----------#"
+
 ###############################################################################
 # WolfSSL build and copy files
 wolfssl:
