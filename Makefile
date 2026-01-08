@@ -6,9 +6,11 @@
 # Edit HOME_DIR if your user/home path differs (default: /home/antiddos)
 HOME_DIR ?= /home/antiddos
 PREFIX ?= $(HOME_DIR)/DDoS_V1
-WIRINGPI_REPO ?= https://github.com/xuanhuy10/WiringPi.git
-I2C_REPO ?= https://github.com/xuanhuy10/i2c.git
-WOLFSSL_REPO ?= https://github.com/wolfSSL/wolfssl.git
+#WIRINGPI_REPO ?= https://github.com/xuanhuy10/WiringPi.git
+WIRINGPI_REPO ?= https://github.com/WiringPi/WiringPi.git
+I2C_REPO ?= https://github.com/vinhcatba/i2c1602/archive/refs/heads/main.zip
+
+WOLFSSL_REPO ?= https://github.com/xuanhuy10/wolfssl.git
 WIRINGPI_DEB_NAME ?= wiringpi_3.16_arm64.deb
 
 SHELL := /bin/bash
@@ -330,6 +332,7 @@ source: bashrc
 	@echo "Sourcing $(HOME_DIR)/.bashrc to apply changes..."
 	@source "$(HOME_DIR)/.bashrc"
 	@echo "Sourced .bashrc."
+	@bash -c 'source "$(HOME_DIR)/.bashrc";
 	@echo "#-----------DONE8-----------#"
 ###############################################################################
 # WolfSSL build and copy files
@@ -354,6 +357,12 @@ wolfssl:
 	@cd "$(PREFIX)/wolfssl" && cp -r src "$(PREFIX)/"
 	@cd "$(PREFIX)/wolfssl" && cp -r wolfcrypt "$(PREFIX)/" 
 	@echo "wolfssl build + copy done (check output for errors)."
+	@cd "$(PREFIX)/wolfssl" && ./configure \
+    --enable-all --enable-static --enable-shared \
+    --host=aarch64-linux-gnu \
+    CFLAGS="-O2 -march=armv8-a" \
+    CXXFLAGS="-O2 -march=armv8-a"
+
 	@echo "#-----------DONE9-----------#"
 
 ###############################################################################
@@ -361,12 +370,12 @@ wolfssl:
 build:
 	@echo "Compiling GUI and CLI (adjust source filenames if different)..."
 	@if [ -f "$(PREFIX)/gui.c" ]; then \
-		gcc -02 "$(PREFIX)/gui.c" -o "$(PREFIX)/gui" -li2c1602 -lwiringPi -lpthread -lncurses -lcurl `pkg-config --cflags --libs wolfssl glib-2.0` -I/usr/local/include -L/usr/local/lib -lwolfssl ; \
+		gcc -O2 "$(PREFIX)/gui.c" -o "$(PREFIX)/gui" -li2c1602 -lwiringPi -lpthread -lncurses -lcurl `pkg-config --cflags --libs wolfssl glib-2.0` -I/usr/local/include -L/usr/local/lib -lwolfssl -lcjson -lsqlite3 -ljansson ; \
 	else \
 		echo "Warning: $(PREFIX)/gui.c not found, skipping gui build"; \
 	fi
 	@if [ -f "$(PREFIX)/cli_working.c" ]; then \
-		gcc "$(PREFIX)/cli_working.c" -o "$(PREFIX)/cli" -li2c1602 -lwiringPi -lpthread -lncurses -lcurl `pkg-config --cflags --libs glib-2.0` -L/usr/local/lib -lwolfssl -lcjson -lsqlite3 -ljansson ; \
+		gcc  "$(PREFIX)/cli_working.c" -o "$(PREFIX)/cli" -li2c1602 -lwiringPi -lpthread -lncurses -lcurl `pkg-config --cflags --libs glib-2.0` -L/usr/local/lib -lwolfssl -lcjson -lsqlite3 -ljansson ; \
 	else \
 		echo "Warning: $(PREFIX)/cli_working.c not found, skipping cli build"; \
 	fi
@@ -388,11 +397,9 @@ unzip_and_move:
 # Clean (remove clones/build artifacts)
 clean:
 	@echo "Cleaning cloned repos and build artifacts under $(PREFIX) ..."
-	# @rm -rf "$(PREFIX)/WiringPi" "$(PREFIX)/i2c" "$(PREFIX)/wolfssl"
-	# @rm -f "$(PREFIX)/$(WIRINGPI_DEB_NAME)"
-    source "$(HOME_DIR)/.bashrc"
+	source "$(HOME_DIR)/.bashrc"
 	@echo "Clean done."
-	@echo "#-----------DONE OK-----------#"
+	@echo "#-----------DONE OK-----------#"	
 
 ###############################################################################
 # ensure PREFIX exists for earlier tasks
